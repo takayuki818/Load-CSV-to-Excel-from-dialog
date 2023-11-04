@@ -8,8 +8,7 @@ def パス取得():
     root.withdraw()
     file_path=filedialog.askopenfilename()
     return file_path
-def CSV読込():
-    file_path=パス取得()
+def CSV読込(file_path):
     if file_path=='':
         print('読込CSVファイルがありません')
         sys.exit()
@@ -22,10 +21,15 @@ def CSV読込():
     sh=wb.active
     with open(file_path,'r',encoding=encoding,newline=newline) as csv_file:
         csv_reader=csv.reader(csv_file,delimiter=delimiter)
-        for _ in range(header_rows):
-            next(csv_reader)
-        for row in csv_reader:
-            sh.append(row)
+        for row_idx,row in enumerate(csv_reader):
+            if row_idx<header_rows:
+                continue
+            for col_idx,value in enumerate(row):
+                sh.cell(row=row_idx-header_rows+1,column=col_idx+1,value=value)
+        # for _ in range(header_rows):
+        #     next(csv_reader)
+        # for row in csv_reader:
+        #     sh.append(row)
     wb.save(output_excel_path)
     wb.close
-CSV読込()
+CSV読込(パス取得())
