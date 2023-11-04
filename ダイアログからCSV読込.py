@@ -26,10 +26,6 @@ def CSV読込(file_path):
                 continue
             for col_idx,value in enumerate(row):
                 sh.cell(row=row_idx-header_rows+1,column=col_idx+1,value=value)
-        # for _ in range(header_rows):
-        #     next(csv_reader)
-        # for row in csv_reader:
-        #     sh.append(row)
     wb.save(output_excel_path)
     wb.close
 CSV読込(パス取得())
