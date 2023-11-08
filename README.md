@@ -5,7 +5,9 @@
 # Features
 ・読込から除外する見出し行数を指定可能（指定しない場合は「0」を入力）
 # Requirement
-・PySimpleGUI
+要インストール外部ライブラリ  
+・PySimpleGUI  
+・openpyxl
 # Note  
 ・複数のCSVファイルを連続して読み込む設定  
 ・文字コード、区切り文字の指定  
