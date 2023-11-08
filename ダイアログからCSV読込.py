@@ -1,8 +1,6 @@
 import openpyxl
 import csv
 import PySimpleGUI as sg
-from tkinter import filedialog
-import sys
 def CSV読込(file_path,header_rows):
     output_excel_path='CSV展開.xlsx'
     encoding='utf-8'
