@@ -1,10 +1,8 @@
 import openpyxl
 import csv
 import PySimpleGUI as sg
-def CSV読込(file_path,header_rows):
+def CSV読込(file_path,header_rows,encoding,delimiter):
     output_excel_path='CSV展開.xlsx'
-    encoding='utf-8'
-    delimiter=','
     newline=''
     wb=openpyxl.Workbook()
     sh=wb.active
@@ -26,7 +24,9 @@ def 整数判定(value):
         return True
 layout=[[sg.Text('展開するCSVファイルのパスを入力（Browseから選択）')], 
         [sg.InputText(),sg.FileBrowse(key='file_path', file_types=(('CSVファイル', '*.csv'),))],
-        [sg.Text('読込から除外する見出し行数を入力（全行読込の場合は「0」）'),sg.InputText(key='header_rows',size=(5,))],
+        [sg.Text('読込除外見出行数（全行読込の場合は「0」）'),sg.InputText(key='header_rows',size=(5,))],
+        [sg.Text('文字コードを選択'),sg.Combo(['UTF-8','SHIFT-JIS','CP932'],default_value='UTF-8',size=(6,1), key='encoding'),
+         sg.Text('区切り文字を入力'),sg.InputText(',',justification='center',size=(5,),key='delimiter')],
         [sg.Button('CSV読込実行',key='OK')]]
 window=sg.Window('CSV読込設定',layout)
 while True:
@@ -36,12 +36,14 @@ while True:
     elif event=='OK':
         file_path=values['file_path']
         header_rows=values['header_rows']
+        encoding=values['encoding']
+        delimiter=values['delimiter']
         if 整数判定(header_rows):
             if file_path=='':
                 sg.popup('CSVファイルのパスを入力してください')
             else:
                 header_rows=int(values['header_rows'])
-                CSV読込(file_path,header_rows)
+                CSV読込(file_path,header_rows,encoding,delimiter)
                 sg.popup('CSVファイル読込が完了しました')
                 break
         else:
